@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-healthy",
+      "description": "A vibrant bowl of fresh vegetables and grains",
+      "imageUrl": "https://picsum.photos/seed/vitanalyze1/1200/600",
+      "imageHint": "healthy food"
+    },
+    {
+      "id": "recipe-1",
+      "description": "Quinoa Salad with Roasted Vegetables",
+      "imageUrl": "https://picsum.photos/seed/vitanalyze2/600/400",
+      "imageHint": "quinoa salad"
+    },
+    {
+      "id": "exercise-1",
+      "description": "Person practicing yoga in a bright room",
+      "imageUrl": "https://picsum.photos/seed/vitanalyze3/600/400",
+      "imageHint": "yoga stretching"
+    },
+    {
+      "id": "exercise-2",
+      "description": "A set of dumbbells on a gym floor",
+      "imageUrl": "https://picsum.photos/seed/vitanalyze4/600/400",
+      "imageHint": "fitness training"
+    },
+    {
+      "id": "avatar-user",
+      "description": "User profile avatar placeholder",
+      "imageUrl": "https://picsum.photos/seed/vitanalyze5/200/200",
+      "imageHint": "person portrait"
+    }
+  ]
 }
