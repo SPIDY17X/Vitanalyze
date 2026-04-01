@@ -51,7 +51,7 @@ const DailyPlanSchema = z.object({
   dailySummary: z.string().describe('A brief summary of the daily plan, including calorie and macro goals for the day.'),
 });
 
-export const AIMealExercisePlannerInputSchema = z.object({
+const AIMealExercisePlannerInputSchema = z.object({
   healthGoals: z.array(z.string()).describe('User\'s health goals (e.g., "lose weight", "build muscle", "maintain health").'),
   dietaryPreferences: z.array(z.string()).describe('User\'s dietary preferences (e.g., "vegetarian", "vegan", "pescatarian", "keto").'),
   dietaryRestrictions: z.array(z.string()).describe('User\'s dietary restrictions or allergies (e.g., "gluten-free", "lactose intolerant", "nut allergy").'),
@@ -70,7 +70,7 @@ export const AIMealExercisePlannerInputSchema = z.object({
 
 export type AIMealExercisePlannerInput = z.infer<typeof AIMealExercisePlannerInputSchema>;
 
-export const AIMealExercisePlannerOutputSchema = z.object({
+const AIMealExercisePlannerOutputSchema = z.object({
   weeklyPlan: z.array(DailyPlanSchema).length(7).describe('A full 7-day personalized meal and exercise plan.'),
   overallSummary: z.string().describe('An overall summary and advice for the weekly plan.'),
 });
