@@ -1,8 +1,13 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Leaf, ArrowRight, Activity, Brain, Utensils } from "lucide-react"
+import { Leaf, ArrowRight, Activity, Brain, Utensils, Loader2 } from "lucide-react"
+import { useUser } from "@/firebase"
 
 export default function Home() {
+  const { user, isUserLoading } = useUser()
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="px-6 lg:px-12 h-20 flex items-center justify-between border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -15,9 +20,24 @@ export default function Home() {
           <Link className="text-sm font-medium hover:text-primary transition-colors" href="/dashboard">Dashboard</Link>
           <Link className="text-sm font-medium hover:text-primary transition-colors" href="/resources">Library</Link>
         </nav>
-        <Button asChild className="rounded-full px-6">
-          <Link href="/dashboard">Get Started</Link>
-        </Button>
+        <div className="flex items-center gap-4">
+          {isUserLoading ? (
+            <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          ) : user ? (
+            <Button asChild className="rounded-full px-6">
+              <Link href="/dashboard">Dashboard</Link>
+            </Button>
+          ) : (
+            <>
+              <Button variant="ghost" asChild className="hidden sm:inline-flex">
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button asChild className="rounded-full px-6">
+                <Link href="/signup">Get Started</Link>
+              </Button>
+            </>
+          )}
+        </div>
       </header>
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 px-6">
@@ -37,7 +57,9 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-3 min-[400px]:flex-row">
                   <Button size="lg" className="rounded-full text-lg px-8 h-14" asChild>
-                    <Link href="/dashboard">Start Your Plan <ArrowRight className="ml-2 h-5 w-5" /></Link>
+                    <Link href={user ? "/dashboard" : "/signup"}>
+                      {user ? "Go to Dashboard" : "Start Your Plan"} <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
                   </Button>
                   <Button size="lg" variant="outline" className="rounded-full text-lg px-8 h-14" asChild>
                     <Link href="/profile">Setup Profile</Link>
