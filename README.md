@@ -1,27 +1,42 @@
 # Vitanalyze | AI Health Coach
 
-This is a Next.js 15 application built with React, ShadCN UI, and Genkit for AI-powered health coaching. It integrates with Firebase for Authentication and Firestore for data storage.
+Vitanalyze is a personalized wellness platform that leverages AI to generate custom meal and exercise plans based on your unique biometrics and goals.
+
+## Features
+
+- **AI Meal Planner**: Personalized recipes and 7-day nutritional schedules.
+- **AI Exercise Planner**: Targeted workout routines based on your activity level.
+- **Coaching Insights**: Deep analysis of your habits with actionable growth tips.
+- **Daily Logging**: Track food intake and physical activity in real-time.
+- **Biometric Progress**: Monitor weight and body metrics with visual charts.
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS + ShadCN UI
+- **AI**: Genkit (Google Gemini)
+- **Backend**: Firebase (Auth & Firestore)
+- **Icons**: Lucide React
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies and run the development server:
 
 ```bash
+npm install
 npm run dev
 ```
 
-Open [http://localhost:9002](http://localhost:9002) with your browser to see the result.
+Open [http://localhost:9002](http://localhost:9002) to see the app.
 
-## Making this available on GitHub
+## How to push to GitHub
 
-To put this project on GitHub, follow these steps:
-
-1. **Create a new repository on GitHub**: Go to [github.com/new](https://github.com/new) and create a repository (don't initialize it with a README or License).
+1. **Create a new repository on GitHub**: Go to [github.com/new](https://github.com/new) and create a repository (empty).
 2. **Initialize local repository**:
    ```bash
    git init
    git add .
-   git commit -m "Initial commit from Firebase Studio"
+   git commit -m "Initial commit"
    ```
 3. **Connect and push**:
    ```bash
@@ -30,13 +45,6 @@ To put this project on GitHub, follow these steps:
    git push -u origin main
    ```
 
-## Project Structure
-
-- `src/app`: Next.js App Router pages and layouts.
-- `src/ai`: Genkit flows for AI coaching and planning.
-- `src/firebase`: Firebase configuration and client-side SDK wrappers.
-- `components/ui`: Reusable ShadCN UI components.
-
 ## Deployment
 
-This project is configured for **Firebase App Hosting**. When you push to GitHub, you can connect your repository to Firebase App Hosting for automatic builds and deployments.
+This project is optimized for **Firebase App Hosting**. Simply connect your GitHub repository to Firebase App Hosting in the Firebase Console for automatic deployments.
