@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
 
 const loggedMeals = [
   { time: "08:15 AM", name: "Oatmeal with Berries", calories: 350, protein: 12, carbs: 45, fat: 8, type: "Breakfast" },
