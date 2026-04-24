@@ -31,16 +31,17 @@ Open [http://localhost:9002](http://localhost:9002) to see the app.
 
 ## How to push to GitHub
 
-1. **Create a new repository on GitHub**: Go to [github.com/new](https://github.com/new) and create a repository (empty).
-2. **Initialize local repository**:
+Run these commands in your terminal to push this project to your repository:
+
+1. **Initialize local repository**:
    ```bash
    git init
    git add .
-   git commit -m "Initial commit"
+   git commit -m "Initial commit of Vitanalyze"
    ```
-3. **Connect and push**:
+2. **Connect and push**:
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+   git remote add origin https://github.com/SPIDY17X/Vitanalyze.git
    git branch -M main
    git push -u origin main
    ```
