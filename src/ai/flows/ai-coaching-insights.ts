@@ -7,8 +7,8 @@
  * - AICoachingInsightsOutput - The return type for the aiCoachingInsights function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'zod';
 
 // Input Schema
 const AICoachingInsightsInputSchema = z.object({
@@ -39,7 +39,6 @@ const AICoachingInsightsInputSchema = z.object({
         '"caloriesBurned": number, "date": string (ISO 8601 date string) }'
     ),
 });
-export type AICoachingInsightsInput = z.infer<typeof AICoachingInsightsInputSchema>;
 
 // Output Schema
 const AICoachingInsightsOutputSchema = z.object({
@@ -56,7 +55,6 @@ const AICoachingInsightsOutputSchema = z.object({
     .array(z.string())
     .describe('Concrete suggestions such as recipe ideas, exercise modifications, or habit-forming strategies.'),
 });
-export type AICoachingInsightsOutput = z.infer<typeof AICoachingInsightsOutputSchema>;
 
 // Prompt Definition
 const aiCoachingInsightsPrompt = ai.definePrompt({
@@ -81,6 +79,9 @@ const aiCoachingInsightsFlow = ai.defineFlow(
     return output;
   },
 );
+
+export type AICoachingInsightsInput = z.infer<typeof AICoachingInsightsInputSchema>;
+export type AICoachingInsightsOutput = z.infer<typeof AICoachingInsightsOutputSchema>;
 
 // Wrapper Function
 export async function aiCoachingInsights(

@@ -8,7 +8,7 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
+import { z } from 'zod';
 
 const IngredientSchema = z.object({
   name: z.string().describe('Name of the ingredient.'),
@@ -52,34 +52,26 @@ const DailyPlanSchema = z.object({
 });
 
 const AIMealExercisePlannerInputSchema = z.object({
-  healthGoals: z.array(z.string()).describe('User\'s health goals (e.g., "lose weight", "build muscle", "maintain health").'),
-  dietaryPreferences: z.array(z.string()).describe('User\'s dietary preferences (e.g., "vegetarian", "vegan", "pescatarian", "keto").'),
-  dietaryRestrictions: z.array(z.string()).describe('User\'s dietary restrictions or allergies (e.g., "gluten-free", "lactose intolerant", "nut allergy").'),
-  activityLevel: z.enum(['sedentary', 'lightly active', 'moderately active', 'very active', 'extra active']).describe('User\'s activity level.'),
-  currentWeightKg: z.number().positive().describe('User\'s current weight in kilograms.'),
-  targetWeightKg: z.number().positive().optional().describe('User\'s target weight in kilograms.'),
-  heightCm: z.number().positive().describe('User\'s height in centimeters.'),
-  age: z.number().int().positive().describe('User\'s age.'),
-  gender: z.enum(['male', 'female', 'other']).describe('User\'s gender.'),
-  currentExerciseRoutineDescription: z.string().optional().describe('Description of user\'s current exercise routine.'),
-  currentMealPlanDescription: z.string().optional().describe('Description of user\'s current meal plan.'),
+  healthGoals: z.array(z.string()).describe("User's health goals (e.g., \"lose weight\", \"build muscle\", \"maintain health\")."),
+  dietaryPreferences: z.array(z.string()).describe("User's dietary preferences (e.g., \"vegetarian\", \"vegan\", \"pescatarian\", \"keto\")."),
+  dietaryRestrictions: z.array(z.string()).describe("User's dietary restrictions or allergies (e.g., \"gluten-free\", \"lactose intolerant\", \"nut allergy\")."),
+  activityLevel: z.enum(['sedentary', 'lightly active', 'moderately active', 'very active', 'extra active']).describe("User's activity level."),
+  currentWeightKg: z.number().positive().describe("User's current weight in kilograms."),
+  targetWeightKg: z.number().positive().optional().describe("User's target weight in kilograms."),
+  heightCm: z.number().positive().describe("User's height in centimeters."),
+  age: z.number().int().positive().describe("User's age."),
+  gender: z.enum(['male', 'female', 'other']).describe("User's gender."),
+  currentExerciseRoutineDescription: z.string().optional().describe("Description of user's current exercise routine."),
+  currentMealPlanDescription: z.string().optional().describe("Description of user's current meal plan."),
   weeklyCalorieTarget: z.number().int().positive().optional().describe('Specific weekly calorie target if provided by the user.'),
   dailyCalorieTarget: z.number().int().positive().optional().describe('Specific daily calorie target if provided by the user.'),
   additionalNotes: z.string().optional().describe('Any additional notes or preferences from the user.'),
 });
 
-export type AIMealExercisePlannerInput = z.infer<typeof AIMealExercisePlannerInputSchema>;
-
 const AIMealExercisePlannerOutputSchema = z.object({
   weeklyPlan: z.array(DailyPlanSchema).length(7).describe('A full 7-day personalized meal and exercise plan.'),
   overallSummary: z.string().describe('An overall summary and advice for the weekly plan.'),
 });
-
-export type AIMealExercisePlannerOutput = z.infer<typeof AIMealExercisePlannerOutputSchema>;
-
-export async function generateMealExercisePlan(input: AIMealExercisePlannerInput): Promise<AIMealExercisePlannerOutput> {
-  return aiMealExercisePlannerFlow(input);
-}
 
 const aiMealExercisePlannerPrompt = ai.definePrompt({
   name: 'aiMealExercisePlannerPrompt',
@@ -127,3 +119,10 @@ const aiMealExercisePlannerFlow = ai.defineFlow(
     return output!;
   },
 );
+
+export type AIMealExercisePlannerInput = z.infer<typeof AIMealExercisePlannerInputSchema>;
+export type AIMealExercisePlannerOutput = z.infer<typeof AIMealExercisePlannerOutputSchema>;
+
+export async function generateMealExercisePlan(input: AIMealExercisePlannerInput): Promise<AIMealExercisePlannerOutput> {
+  return aiMealExercisePlannerFlow(input);
+}
