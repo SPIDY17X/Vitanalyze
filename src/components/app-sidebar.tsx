@@ -2,19 +2,19 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { 
   LayoutDashboard, 
   Utensils, 
-  Activity, 
-  User, 
   Lightbulb, 
   Library, 
   Calendar,
   Settings,
-  Leaf
+  Leaf,
+  User,
+  LogOut,
+  Loader2
 } from "lucide-react"
-
 import {
   Sidebar,
   SidebarContent,
@@ -25,42 +25,30 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
+import { useUser, useAuth } from "@/firebase"
+import { signOut } from "firebase/auth"
 
 const items = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Planner",
-    url: "/planner",
-    icon: Calendar,
-  },
-  {
-    title: "Logging",
-    url: "/log",
-    icon: Utensils,
-  },
-  {
-    title: "Insights",
-    url: "/insights",
-    icon: Lightbulb,
-  },
-  {
-    title: "Resources",
-    url: "/resources",
-    icon: Library,
-  },
-  {
-    title: "Profile",
-    url: "/profile",
-    icon: User,
-  },
+  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Planner", url: "/planner", icon: Calendar },
+  { title: "Logging", url: "/log", icon: Utensils },
+  { title: "Insights", url: "/insights", icon: Lightbulb },
+  { title: "Resources", url: "/resources", icon: Library },
+  { title: "Profile", url: "/profile", icon: User },
 ]
 
 export function AppSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+  const auth = useAuth()
+  const { user } = useUser()
+  const [loggingOut, setLoggingOut] = React.useState(false)
+
+  const handleLogout = async () => {
+    setLoggingOut(true)
+    await signOut(auth)
+    router.push("/login")
+  }
 
   return (
     <Sidebar variant="inset" collapsible="icon">
@@ -73,6 +61,7 @@ export function AppSidebar() {
           <span className="text-xs text-muted-foreground">AI Health Coach</span>
         </div>
       </SidebarHeader>
+
       <SidebarContent>
         <SidebarMenu className="px-2">
           {items.map((item) => (
@@ -92,14 +81,44 @@ export function AppSidebar() {
           ))}
         </SidebarMenu>
       </SidebarContent>
+
       <SidebarFooter className="p-4">
         <SidebarMenu>
+          {/* User Email */}
           <SidebarMenuItem>
-             <SidebarMenuButton asChild tooltip="Settings" className="group-data-[collapsible=icon]:justify-center">
+            <div className="px-2 py-1 group-data-[collapsible=icon]:hidden">
+              <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
+            </div>
+          </SidebarMenuItem>
+
+          <SidebarSeparator />
+
+          {/* Settings */}
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Settings">
               <Link href="/profile">
                 <Settings className="size-4" />
                 <span className="group-data-[collapsible=icon]:hidden">Settings</span>
               </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          {/* Logout */}
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              tooltip="Logout"
+              onClick={handleLogout}
+              disabled={loggingOut}
+              className="text-destructive hover:text-destructive hover:bg-destructive/10 cursor-pointer"
+            >
+              {loggingOut ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <LogOut className="size-4" />
+              )}
+              <span className="group-data-[collapsible=icon]:hidden">
+                {loggingOut ? "Logging out..." : "Logout"}
+              </span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
